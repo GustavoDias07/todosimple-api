@@ -71,7 +71,7 @@ public class Task {
     }
 
     @Override
-    public boolean equals(Object obj) { //chega se o objeto é da mesma classe
+    public boolean equals(Object obj) { //checa se o objeto é da mesma classe
         if (obj == this)
             return true;
         if(obj == null)

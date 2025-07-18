@@ -21,8 +21,8 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Task>findById(@PathVariable long id){
+    @GetMapping("/{id}")//@Get -> Indica que o mét.odo responde a requisições HTTP do tipo GET
+    public ResponseEntity<Task>findById(@PathVariable long id){//@path -> Liga o valor vindo da URL ao parâmetro do métodoo
         Task obj = this.taskService.findTaskById(id);
         return ResponseEntity.ok().body(obj);
     }
@@ -33,7 +33,7 @@ public class TaskController {
         return ResponseEntity.ok().body(objs);
     }
 
-    @PostMapping
+    @PostMapping//Criar recursos (inserir no banco de dados).
     @Validated
     public ResponseEntity<Void> create(@Valid @RequestBody Task obj){
         this.taskService.create(obj);
@@ -41,7 +41,7 @@ public class TaskController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}")//Atualizar recursos existentes.
     @Validated
     public ResponseEntity<Void> update(@Valid @RequestBody Task obj, @PathVariable long id ){
         obj.setId(id);
@@ -49,11 +49,16 @@ public class TaskController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")// deleta recurso no banco
     public ResponseEntity<Void> delete(@PathVariable long id){
         this.taskService.delete(id);
         return ResponseEntity.noContent().build();
     }
+    //ResponseEntity.ok().body(obj) → status 200 com um corpo.
+    //
+    //ResponseEntity.created(uri).build() → status 201 com URI no header.
+    //
+    //ResponseEntity.noContent().build() → status 204 sem corpo.
 
 
 

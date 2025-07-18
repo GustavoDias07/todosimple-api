@@ -19,11 +19,12 @@ public class TaskService {
 
     @Autowired
     private UserService userService;
+
     @Autowired
     private ServletWebServerFactoryCustomizer servletWebServerFactoryCustomizer;
 
     public Task findTaskById(Long id) {
-        Optional<Task> task = this.taskRepository.findById(id);
+        Optional<Task> task = this.taskRepository.findById(id);//optional só executa se tiver tarefa, evita/trata o erro
         return task.orElseThrow(() -> new RuntimeException("Task not found! Id:" + id + ", Type: " + Task.class.getName()));
     }
 
