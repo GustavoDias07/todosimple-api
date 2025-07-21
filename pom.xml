@@ -14,6 +14,8 @@
 	<name>todosimple</name>
 	<description>Spring Boot API for To Do App</description>
 	<properties>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
@@ -50,6 +52,13 @@
 			<artifactId>mysql-connector-j</artifactId>
 			<version>8.0.33</version> <!-- Ou a versão mais recente estável -->
 			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.24</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
