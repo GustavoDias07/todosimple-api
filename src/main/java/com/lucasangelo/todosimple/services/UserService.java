@@ -3,6 +3,8 @@ package com.lucasangelo.todosimple.services;
 import com.lucasangelo.todosimple.models.User;
 import com.lucasangelo.todosimple.repositories.UserRepository;
 
+import com.lucasangelo.todosimple.services.exceptions.DataBindingViolationException;
+import com.lucasangelo.todosimple.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +20,7 @@ public class UserService {
 
     public User findById(Long id){
         Optional<User> user = this.userRepository.findById(id);
-        return user.orElseThrow(() -> new RuntimeException("User not found! Id:" + id + ", Type: " + User.class.getName())); //exeção que nao para o programa
+        return user.orElseThrow(() -> new ObjectNotFoundException("User not found! Id:" + id + ", Type: " + User.class.getName())); //exeção que nao para o programa
     }
 
     @Transactional
@@ -40,7 +42,7 @@ public class UserService {
         try {
             this.userRepository.deleteById(id);
         } catch (Exception e) {
-            throw new RuntimeException("Error deleting user: ");
+            throw new DataBindingViolationException("Error deleting user: ");
         }
     }
 

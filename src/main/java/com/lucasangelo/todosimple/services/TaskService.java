@@ -3,6 +3,8 @@ package com.lucasangelo.todosimple.services;
 import com.lucasangelo.todosimple.models.Task;
 import com.lucasangelo.todosimple.models.User;
 import com.lucasangelo.todosimple.repositories.TaskRepository;
+import com.lucasangelo.todosimple.services.exceptions.DataBindingViolationException;
+import com.lucasangelo.todosimple.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryCustomizer;
 import org.springframework.stereotype.Service;
@@ -25,7 +27,7 @@ public class TaskService {
 
     public Task findTaskById(Long id) {
         Optional<Task> task = this.taskRepository.findById(id);//optional só executa se tiver tarefa, evita/trata o erro
-        return task.orElseThrow(() -> new RuntimeException("Task not found! Id:" + id + ", Type: " + Task.class.getName()));
+        return task.orElseThrow(() -> new ObjectNotFoundException("Task not found! Id:" + id + ", Type: " + Task.class.getName()));
     }
 
     public List<Task> findAllByUser_Id(long userId){
@@ -54,7 +56,7 @@ public class TaskService {
         try {
             this.taskRepository.deleteById(id);
         } catch (Exception e) {
-            throw new RuntimeException("Error deleting task!");
+            throw new DataBindingViolationException("Error deleting task!");
         }
     }
 }
