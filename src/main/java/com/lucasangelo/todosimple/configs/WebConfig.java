@@ -11,5 +11,14 @@ public class WebConfig implements WebMvcConfigurer { //implementaçao web do spr
 
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**");// tudo depois da barra sera aceito como parametro
+
+
+        //config + completa para produção
+
+        //registry.addMapping("/**")
+                //.allowedOrigins("http://localhost:3000")  // somente essa origem pode acessar
+                //.allowedMethods("GET", "POST", "PUT", "DELETE")  // métodos permitidos
+                //.allowedHeaders("*")  // cabeçalhos permitidos
+               //.allowCredentials(true);  // permite envio de cookies/autenticação
     }
 }
