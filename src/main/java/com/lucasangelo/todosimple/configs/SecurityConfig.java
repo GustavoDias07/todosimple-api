@@ -15,9 +15,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
-@Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true) //todos os metodos recebem uma segurança global
+@Configuration//indica que essa é uma classe de configuração do Spring
+@EnableWebSecurity//ativa a segurança da web com Spring Security.
+@EnableGlobalMethodSecurity(prePostEnabled = true)//permite usar anotações como @PreAuthorize e @PostAuthorize nos métodos para controlar acesso por regras.
 public class SecurityConfig {
 
     private static final String[] PUBLIC_MATCHERS = {
@@ -34,15 +34,15 @@ public class SecurityConfig {
 
         http.cors().and().csrf().disable();
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
-                .antMatchers(PUBLIC_MATCHERS).permitAll()
-                .anyRequest().authenticated();
+                .antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()//permite POST sem autenticação em /user e /login.
+                .antMatchers(PUBLIC_MATCHERS).permitAll()//Permite qualquer métoodo em /.
+                .anyRequest().authenticated();//Qualquer outra requisição precisa estar autenticada
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//impossivel salvar sessão
 
         return http.build();
     };
 
-    @Bean
+    @Bean// métod cria um objeto que deve ser gerenciado pelo Spring (ou seja, uma dependência injetável).
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
