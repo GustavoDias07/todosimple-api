@@ -3,7 +3,6 @@ package com.lucasangelo.todosimple.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lucasangelo.todosimple.exceptions.GlobalExceptionHandler;
 import com.lucasangelo.todosimple.models.User;
-import io.jsonwebtoken.io.IOException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,6 +13,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -39,7 +39,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
            Authentication authentication = this.authenticationManager.authenticate(authToken);
            return authentication;
-       }catch (Exception e){
+       }catch (IOException e){
            throw new RuntimeException(e);
        }
     }

@@ -20,7 +20,8 @@ public class ErrorResponse {
     private List<ValidationErrors> errors;
 
     public String toJson() {
-        return "{\"status\":" + getStatus() + " , " + "\"message\":" + getMessage() + "\"}";
+        return "{\"status\": " + getStatus() + ", " +
+                "\"message\": \"" + getMessage() + "\"}";
     }
 
     @Getter

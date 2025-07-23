@@ -1,6 +1,7 @@
 package com.lucasangelo.todosimple.configs;
 
 import com.lucasangelo.todosimple.security.JWTAuthenticationFilter;
+import com.lucasangelo.todosimple.security.JWTAuthorizationFilter;
 import com.lucasangelo.todosimple.security.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -60,6 +61,7 @@ public class SecurityConfig {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//impossivel salvar sessão
 
         http.addFilter(new JWTAuthenticationFilter(this.authenticationManager, jwtUtil));
+        http.addFilter(new JWTAuthorizationFilter(this.authenticationManager, this.jwtUtil, this.userDetailsService));
 
         return http.build();
     };
