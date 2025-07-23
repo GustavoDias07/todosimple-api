@@ -1,5 +1,6 @@
 package com.lucasangelo.todosimple.configs;
 
+import com.lucasangelo.todosimple.security.JWTAuthenticationFilter;
 import com.lucasangelo.todosimple.security.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -54,8 +55,11 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()//permite POST sem autenticação em /user e /login.
                 .antMatchers(PUBLIC_MATCHERS).permitAll()//Permite qualquer métoodo em /.
-                .anyRequest().authenticated();//Qualquer outra requisição precisa estar autenticada
+                .anyRequest().authenticated().and()
+                .authenticationManager(authenticationManager);//Qualquer outra requisição precisa estar autenticada
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//impossivel salvar sessão
+
+        http.addFilter(new JWTAuthenticationFilter(this.authenticationManager, jwtUtil));
 
         return http.build();
     };
