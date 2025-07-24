@@ -2,8 +2,6 @@ package com.lucasangelo.todosimple.controllers;
 
 import com.lucasangelo.todosimple.models.Task;
 import com.lucasangelo.todosimple.services.TaskService;
-import com.lucasangelo.todosimple.services.UserService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -22,19 +20,15 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-    @Autowired
-    private UserService userService;
-
     @GetMapping("/{id}")//@Get -> Indica que o mét.odo responde a requisições HTTP do tipo GET
     public ResponseEntity<Task>findById(@PathVariable long id){//@path -> Liga o valor vindo da URL ao parâmetro do métodoo
         Task obj = this.taskService.findTaskById(id);
         return ResponseEntity.ok().body(obj);
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Task>> findAllByUserId(@PathVariable long userId){
-        this.userService.findById(userId);
-        List<Task> objs = this.taskService.findAllByUser_Id(userId);
+    @GetMapping("/user")
+    public ResponseEntity<List<Task>> findAllByUser(){
+        List<Task> objs = this.taskService.findAllByUser();
         return ResponseEntity.ok().body(objs);
     }
 
