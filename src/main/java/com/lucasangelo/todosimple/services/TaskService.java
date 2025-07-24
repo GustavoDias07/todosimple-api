@@ -3,6 +3,7 @@ package com.lucasangelo.todosimple.services;
 import com.lucasangelo.todosimple.models.Task;
 import com.lucasangelo.todosimple.models.User;
 import com.lucasangelo.todosimple.models.enums.ProfileEnum;
+import com.lucasangelo.todosimple.models.projection.TaskProjection;
 import com.lucasangelo.todosimple.repositories.TaskRepository;
 import com.lucasangelo.todosimple.security.UserSpringSecurity;
 import com.lucasangelo.todosimple.services.exceptions.AuthorizationException;
@@ -43,12 +44,12 @@ public class TaskService {
         return task;
     }
 
-    public List<Task> findAllByUser(){
+    public List<TaskProjection> findAllByUser(){
         UserSpringSecurity userSpringSecurity = UserService.authenticated();
         if (Objects.isNull(userSpringSecurity))
             throw new AuthorizationException("Access denied!");
 
-        List<Task> tasks = this.taskRepository.findByUser_Id(userSpringSecurity.getId());
+        List<TaskProjection> tasks = this.taskRepository.findByUser_Id(userSpringSecurity.getId());
         return tasks;
     }
 
